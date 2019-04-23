@@ -1,0 +1,8 @@
+axelerant_site_info_page:
+    path: 'page_json/{key}/{nid}'
+    defaults:
+        _controller: '\Drupal\axelerant_site_info\Controller\AxelerantController::content'
+    requirements:
+        _permission: 'access content' 
+    options:
+        no_cache: 'TRUE'

@@ -1,0 +1,44 @@
+<?php
+/**
+ * @file
+ * Module for alter Site Information.
+ */
+use Drupal\Core\State\StateInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function axelerant_site_info_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'system_site_information_settings') {
+    $siteapikey = \Drupal::state()->get('siteapikey');
+    $form['site_information']['siteapikey'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Site API Key'),
+      '#default_value' => (isset($siteapikey))?$siteapikey:'No API Key yet',
+    );
+    // Define Validate Method
+    $form['#validate'][] = 'axelerant_site_info_form_validate';
+    // Define Submit Method
+    $form['#submit'][] = 'axelerant_site_info_form_submit';
+    // Update Submit Button Text
+    $form['actions']['submit']['#value'] = t('Update Configuration');
+  }
+}
+
+/**
+ * Validating Form.
+ */
+function axelerant_site_info_form_validate(array &$form, FormStateInterface $form_state)  {
+}
+
+/**
+ * Submiting Form.
+ */
+function axelerant_site_info_form_submit(array &$form, FormStateInterface $form_state) {
+  $siteapikey = $form_state->getValue('siteapikey');
+  \Drupal::state()->set('siteapikey', $siteapikey);
+  drupal_set_message(t('Site API Key has been saved with value i.e. <strong>'.$siteapikey.'</strong>'));
+}

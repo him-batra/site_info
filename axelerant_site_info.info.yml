@@ -1,0 +1,8 @@
+name: Axelerant Site Information
+description: This module is altering drupal site info configuration.
+package: Axelerant
+type: module
+version: 8.x-1.0
+core: 8.x
+project: axelerant_site_info
+datestamp: 1555997486
